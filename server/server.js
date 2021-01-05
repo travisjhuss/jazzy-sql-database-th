@@ -83,8 +83,19 @@ app.get('/artist', (req, res) => {
 });
 
 app.post('/artist', (req, res) => {
-    artistList.push(req.body);
-    res.sendStatus(201);
+    // artistList.push(req.body);
+    // res.sendStatus(201);
+    const queryText = `
+        INSERT INTO "artist" ("name", "birthdate")
+        VALUES ($1, $2);
+    `;
+    pool.query(queryText, [req.body.name, req.body.birthdate])
+        .then((result) => {
+            res.sendStatus(201);
+        }).catch((error) => {
+            console.log(error);
+            res.sendStatus(500);
+        }); // end pool.query
 });
 
 app.get('/song', (req, res) => {
