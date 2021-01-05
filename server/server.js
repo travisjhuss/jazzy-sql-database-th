@@ -69,8 +69,17 @@ const songList = [
 ];
 
 app.get('/artist', (req, res) => {
-    console.log(`In /songs GET`);
-    res.send(artistList);
+    // console.log(`In /songs GET`);
+    // res.send(artistList);
+    const queryText = `SELECT * FROM "artist" ORDER BY "name" ASC`; 
+    pool.query(queryText)
+        .then((result) => {
+            //console.log(result.rows);
+            res.send(result.rows);
+    }).catch((error) => {
+        console.log(error);
+        res.sendStatus(500);
+    }); // end pool.query
 });
 
 app.post('/artist', (req, res) => {
@@ -79,8 +88,17 @@ app.post('/artist', (req, res) => {
 });
 
 app.get('/song', (req, res) => {
-    console.log(`In /songs GET`);
-    res.send(songList);
+    // console.log(`In /songs GET`);
+    // res.send(songList);
+    const queryText = `SELECT * FROM "song" ORDER BY "title" ASC`; 
+    pool.query(queryText)
+        .then((result) => {
+            //console.log(result.rows);
+            res.send(result.rows);
+    }).catch((error) => {
+        console.log(error);
+        res.sendStatus(500);
+    }); // end pool.query
 });
 
 app.post('/song', (req, res) => {
